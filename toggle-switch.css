@@ -1,0 +1,269 @@
+/* toggle-switch.css - iOS 26 Liquid Glass (White & Green Glow Edition) & Background Manager */
+
+/* === コンテナ設定 === */
+.toggle-container {
+    position: relative;
+    width: 120px;
+    height: 64px;
+    min-width: 120px;
+    min-height: 64px;
+    flex-shrink: 0;
+    padding: 2px;
+    box-sizing: content-box;
+}
+
+#modeSwitch {
+    display: none;
+}
+
+/* === スイッチの背景 (オフの時：白いミルキーガラス) === */
+.toggle-label {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
+    cursor: pointer;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.8),
+        inset 0 -4px 10px rgba(0, 0, 0, 0.05),
+        0 10px 30px rgba(0, 0, 0, 0.1),
+        0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* === ボタン (オフの時：電池切れかけの明滅) === */
+.toggle-btn {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+
+    /* ベース: 白から薄い緑 */
+    background: linear-gradient(180deg, #ffffff 30%, #ccffcc 100%);
+
+    /* 初期状態の影 */
+    box-shadow:
+        0 0 15px rgba(52, 199, 89, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.1),
+        inset 0 2px 2px rgba(255, 255, 255, 1);
+
+    /* 電池切れのような不規則な点滅アニメーション (4秒でループ) */
+    animation: dying-light 4s infinite;
+
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.4s ease;
+    z-index: 2;
+}
+
+/* 点滅アニメーションの定義 */
+@keyframes dying-light {
+    0% {
+        /* 普通の状態 */
+        box-shadow: 0 0 15px rgba(52, 199, 89, 0.4), 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 2px 2px rgba(255, 255, 255, 1);
+    }
+
+    10% {
+        /* フッと消えかける */
+        box-shadow: 0 0 4px rgba(52, 199, 89, 0.1), 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 2px 2px rgba(255, 255, 255, 1);
+    }
+
+    15% {
+        /* 持ち直す */
+        box-shadow: 0 0 12px rgba(52, 199, 89, 0.35), 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 2px 2px rgba(255, 255, 255, 1);
+    }
+
+    30% {
+        /* また弱まる */
+        box-shadow: 0 0 6px rgba(52, 199, 89, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 2px 2px rgba(255, 255, 255, 1);
+    }
+
+    35% {
+        /* 一瞬強く輝く（接触不良風） */
+        box-shadow: 0 0 20px rgba(52, 199, 89, 0.6), 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 2px 2px rgba(255, 255, 255, 1);
+    }
+
+    40% {
+        /* 落ち着く */
+        box-shadow: 0 0 10px rgba(52, 199, 89, 0.3), 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 2px 2px rgba(255, 255, 255, 1);
+    }
+
+    70% {
+        /* じわーっと弱まる */
+        box-shadow: 0 0 5px rgba(52, 199, 89, 0.1), 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 2px 2px rgba(255, 255, 255, 1);
+    }
+
+    80% {
+        /* じわーっと戻る */
+        box-shadow: 0 0 14px rgba(52, 199, 89, 0.4), 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 2px 2px rgba(255, 255, 255, 1);
+    }
+
+    100% {
+        /* ループ用 */
+        box-shadow: 0 0 15px rgba(52, 199, 89, 0.4), 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 2px 2px rgba(255, 255, 255, 1);
+    }
+}
+
+/* ボタン表面のハイライト */
+.toggle-btn::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    width: 16px;
+    height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+    opacity: 0.9;
+    filter: blur(0.5px);
+    transform: rotate(-45deg);
+}
+
+.toggle-btn::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    width: 16px;
+    height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+    opacity: 0.9;
+    filter: blur(0.5px);
+    transform: rotate(-45deg);
+}
+
+/* === ONの状態 === */
+#modeSwitch:checked+.toggle-label {
+    background: rgba(52, 199, 89, 0.6);
+    border-color: rgba(52, 199, 89, 0.4);
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.5),
+        inset 0 -4px 15px rgba(40, 160, 70, 0.4),
+        0 0 20px rgba(52, 199, 89, 0.5),
+        0 10px 30px rgba(52, 199, 89, 0.2);
+}
+
+#modeSwitch:checked+.toggle-label .toggle-btn {
+    transform: translateX(56px);
+    background: #ffffff;
+    box-shadow:
+        -2px 4px 15px rgba(40, 160, 70, 0.3),
+        inset 0 2px 2px rgba(255, 255, 255, 1);
+}
+
+/* =========================================
+   ここから背景の一括管理 (滑らかな遷移用)
+   ========================================= */
+
+/* 1. ベースレイヤー（Walkモード：暗いノイズ） */
+/* ここは前回のまま変更なし（左から右へ流れるノイズ） */
+body {
+    background-color: #0f0c29;
+
+    background-image:
+        url('noise.svg'),
+        linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+
+    background-blend-mode: overlay, normal;
+    background-size: 100px 100px, 100% 100%;
+
+    /* ノイズを左から右へ流す */
+    animation: bg-scroll-right 6s linear infinite;
+
+    position: relative;
+    z-index: 0;
+}
+
+/* 2. オーバーレイレイヤー（Danceモード：メッシュグラデーション夕日） */
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    /* 画面より大きくして動き回れるようにする */
+    z-index: -1;
+
+    /* === メッシュグラデーションの定義 === */
+    background-color: #ff3cac;
+    /* ベースのピンク */
+
+    background-image:
+        /* 1. 左上の紫（夜の予感） */
+        radial-gradient(circle at 0% 0%, #2b86c5 0%, transparent 50%),
+        /* 2. 右上の濃い紫 */
+        radial-gradient(circle at 100% 0%, #784ba0 0%, transparent 50%),
+        /* 3. 中心の強烈な夕日（オレンジ） */
+        radial-gradient(circle at 50% 50%, #ff9a00 0%, transparent 50%),
+        /* 4. 下部の燃える赤 */
+        radial-gradient(circle at 50% 100%, #ff3cac 0%, transparent 50%);
+
+    background-size: 100% 100%;
+
+    /* 色が混ざり合いながら動くアニメーション
+       duration: 20s (ゆっくり変化)
+    */
+    animation: mesh-sunset 20s ease-in-out infinite alternate;
+
+    /* 初期状態は透明 */
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+/* 3. スイッチON時の変化 */
+body.bg-dance::before {
+    opacity: 1;
+    /* 不透明にしてメッシュを表示 */
+}
+
+
+/* === アニメーション定義 === */
+
+/* ノイズを右へ流す */
+@keyframes bg-scroll-right {
+    0% {
+        background-position: 0px 0px, 50% 50%;
+    }
+
+    100% {
+        background-position: 100px 50px, 50% 50%;
+    }
+}
+
+/* メッシュグラデーションの動き（夕日のゆらめき） */
+@keyframes mesh-sunset {
+    0% {
+        /* 初期位置：標準的な夕日 */
+        transform: translate(0, 0) scale(1);
+        filter: hue-rotate(0deg);
+    }
+
+    25% {
+        /* 少し拡大して色が広がる */
+        transform: translate(-5%, 5%) scale(1.1);
+    }
+
+    50% {
+        /* 色相が30度ズレる（少しピンクや紫が強くなる） */
+        transform: translate(5%, -5%) scale(1);
+        filter: hue-rotate(30deg);
+    }
+
+    75% {
+        /* さらに位置が動く */
+        transform: translate(-10%, -15%) scale(1.05);
+    }
+
+    100% {
+        /* 色相が戻りつつ、位置も変わる */
+        transform: translate(8%, 4%) scale(1);
+        filter: hue-rotate(-10deg);
+    }
+}

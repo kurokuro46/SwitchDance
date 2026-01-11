@@ -1,0 +1,147 @@
+/* dance_caramell.css - Character Animation Only */
+
+.anim-dance {
+    --dance-speed: 1.5s;
+    --hand-horizontal-offset: -10px;
+}
+
+/* === アニメーション適用 === */
+.anim-dance .bounce-inner {
+    transform-origin: 50% 0%;
+    transform-box: fill-box;
+    animation: caramell-hips var(--dance-speed) infinite cubic-bezier(0.4, 0.0, 0.6, 1.0) !important;
+}
+
+.anim-dance .head-group {
+    animation: caramell-head-scale var(--dance-speed) infinite cubic-bezier(0.4, 0.0, 0.6, 1.0) !important;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+
+.anim-dance .leg-left {
+    transform-origin: 50% 100%;
+    transform-box: fill-box;
+    animation: caramell-leg-left var(--dance-speed) infinite cubic-bezier(0.4, 0.0, 0.6, 1.0) !important;
+}
+
+.anim-dance .leg-right {
+    transform-origin: 50% 100%;
+    transform-box: fill-box;
+    animation: caramell-leg-right var(--dance-speed) infinite cubic-bezier(0.4, 0.0, 0.6, 1.0) !important;
+}
+
+.anim-dance .leg-left rect,
+.anim-dance .leg-right rect {
+    animation: none !important;
+}
+
+.anim-dance .hand-left circle {
+    transform-origin: center;
+    transform: translate(var(--hand-horizontal-offset), -50px);
+    animation: caramell-hand-left calc(var(--dance-speed) / 4) infinite ease-in-out !important;
+}
+
+.anim-dance .hand-right circle {
+    transform-origin: center;
+    transform: translate(calc(var(--hand-horizontal-offset) * -1), -50px);
+    animation: caramell-hand-right calc(var(--dance-speed) / 4) infinite ease-in-out !important;
+}
+
+/* === キーフレーム === */
+@keyframes caramell-head-scale {
+
+    0%,
+    50%,
+    100% {
+        transform: scale(1);
+    }
+
+    25%,
+    75% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes caramell-hips {
+
+    0%,
+    100% {
+        transform: rotate(-12deg) translateY(0px);
+    }
+
+    25% {
+        transform: rotate(-8deg) translateY(-2px);
+    }
+
+    50% {
+        transform: rotate(12deg) translateY(-4px);
+    }
+
+    75% {
+        transform: rotate(8deg) translateY(-2px);
+    }
+}
+
+@keyframes caramell-leg-left {
+
+    0%,
+    100% {
+        transform: rotate(12deg);
+    }
+
+    25% {
+        transform: rotate(8deg);
+    }
+
+    50% {
+        transform: rotate(-12deg);
+    }
+
+    75% {
+        transform: rotate(-8deg);
+    }
+}
+
+@keyframes caramell-leg-right {
+
+    0%,
+    100% {
+        transform: rotate(12deg);
+    }
+
+    25% {
+        transform: rotate(8deg);
+    }
+
+    50% {
+        transform: rotate(-12deg);
+    }
+
+    75% {
+        transform: rotate(-8deg);
+    }
+}
+
+@keyframes caramell-hand-left {
+
+    0%,
+    100% {
+        transform: translate(var(--hand-horizontal-offset), -50px) scale(1);
+    }
+
+    50% {
+        transform: translate(var(--hand-horizontal-offset), -40px) scale(0.9);
+    }
+}
+
+@keyframes caramell-hand-right {
+
+    0%,
+    100% {
+        transform: translate(calc(var(--hand-horizontal-offset) * -1), -50px) scale(1);
+    }
+
+    50% {
+        transform: translate(calc(var(--hand-horizontal-offset) * -1), -40px) scale(0.9);
+    }
+}
