@@ -8,11 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // OFFモード
     const textOff = [
-        "はぁ",
         "・・・・",
         "開発ってなんだろう",
         "ものづくりがすき",
-        "クリエイターに憧れた",
+        "クリエイター",
         "・・・",
         "技術を学ぶため高専に入った",
         "今はSEで開発",
@@ -23,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "遊び心",
         "UXデザイン？",
         "締め切りギリギリで作成中",
+        "デザインってどうやって学ぶんだろう",
     ];
 
     // ONモード
@@ -47,6 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
         "いい企画ですわ",
         "ものづくりは楽しい"
     ];
+    // 特別扱いしたいテキスト
+    const SPECIAL_TEXTS = [
+        "SWITCH！",
+        "無駄なことに価値を見出すのがクリエイトなんじゃないか",
+        "クリエイトには意思も必要",
+    ];
 
     // 状態管理
     let indexOff = 0;
@@ -56,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
     spawnText();
 
     function spawnText() {
-        // 現在のモード判定（スイッチの状態を直接見る）
         const isDanceMode = switchInput.checked;
         let text = "";
 
@@ -70,8 +75,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         createTextElement(text);
 
-        // 次の出現までの時間をランダム設定 (800ms ~ 2500ms)
-        const nextDelay = Math.random() * 1700 + 800;
+        // 次の出現までの時間をランダム設定
+        let nextDelay = Math.random() * 1700 + 800;
+
+        // ★リストに含まれているかチェック
+        if (SPECIAL_TEXTS.includes(text)) {
+            nextDelay = 3000; // 特別なテキストの後は余韻を持たせる
+        }
+
         setTimeout(spawnText, nextDelay);
     }
 
@@ -82,24 +93,28 @@ document.addEventListener('DOMContentLoaded', () => {
         el.classList.add('floating-text');
         el.textContent = text;
 
-        // === ランダム配置ロジック ===
+        // === 特別なテキストか判定 ===
+        // ★リストに含まれているかチェック
+        const isSpecial = SPECIAL_TEXTS.includes(text);
 
-        // X軸: 画面幅の10%〜90%の間に配置
-        const randomX = Math.random() * 80 + 10;
+        if (isSpecial) {
+            // ★特別設定：画面中央固定
+            el.style.left = '50%';
+            el.style.top = '50%';
+            el.style.fontSize = '2rem';
 
-        // Y軸: 画面上部 10%〜45% のあたり
-        const randomY = Math.random() * 35 + 10;
+        } else {
+            // ★通常設定：ランダム配置
+            const randomX = Math.random() * 80 + 10;
+            const randomY = Math.random() * 35 + 10;
 
-        // アニメーション時間: 3秒〜6秒
+            el.style.left = `${randomX}%`;
+            el.style.top = `${randomY}%`;
+            const size = Math.random() * 0.5 + 1.0;
+            el.style.fontSize = `${size}rem`;
+        }
         const duration = Math.random() * 3 + 3;
 
-        // フォントサイズ: 1rem ~ 1.5rem
-        const size = Math.random() * 0.5 + 1.0;
-
-        // スタイル適用
-        el.style.left = `${randomX}%`;
-        el.style.top = `${randomY}%`;
-        el.style.fontSize = `${size}rem`;
         el.style.animation = `floatTextAnim ${duration}s ease-out forwards`;
 
         // DOMに追加
@@ -111,3 +126,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
