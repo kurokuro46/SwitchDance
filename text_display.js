@@ -4,6 +4,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const textContainer = document.getElementById('text-container');
     const switchInput = document.getElementById('modeSwitch');
 
+    // === テキスト表示の頻度設定 ===
+    // テキスト出現の待機時間範囲（ミリ秒）
+    const TEXT_DISPLAY_CONFIG = {
+        minDelay: 2000,      // 最小待機時間（ミリ秒）
+        maxDelay: 3000,     // 最大待機時間（ミリ秒）
+        specialDelay: 3500  // 特別なテキスト後の待機時間（ミリ秒）
+    };
+
     // === テキストデータ ===
 
     // OFFモード
@@ -14,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "クリエイター",
         "・・・",
         "技術を学ぶため高専に入った",
-        "今はSEで開発",
+        "今はSESで開発",
         "最近想像力が落ちてる気がする",
         "エビデンス作成",
         "仕様変更",
@@ -23,29 +31,34 @@ document.addEventListener('DOMContentLoaded', () => {
         "UXデザイン？",
         "締め切りギリギリで作成中",
         "デザインってどうやって学ぶんだろう",
+        "本当にユーザーに価値を提供できているのか",
     ];
 
     // ONモード
     const textOn = [
         "SWITCH！",
+        "夕焼け空のグラデーションが好き",
         "フレームワークは使ってないです",
         "処理を軽くしたかった",
         "作ってるとつい機能を追加しちゃう",
-        "意味はない",
-        "夕焼け空のグラデーションが好き",
+        "本来のクリエイトを忘れていた",
+        "デザインで付加価値をつけたい",
+        "たのしい",
         "ノイズ加工ってなんかかっこいい",
         "このダンスはウッーウッーウマウマ(ﾟ∀ﾟ)",
-        "AI Agentにダンスを教えるのが一番苦労",
-        "一発ではできなかったので、小分けにして開発",
-        "調整できるように変数を作らせるのもよし",
-        "Liquid Glassはあんまり好きじゃない",
-        "UIに遊び心を入れると利便性が下がる",
+        "小分けにして開発",
+        "調整できるように変数を作ろう",
+        "Liquid Glassはカッコいいけどね、",
+        "言われたものを作るだけじゃあつまらない",
+        "UIに遊び心を入れると利便性が下がるけど、",
         "無駄なことに価値を見出すのがクリエイトなんじゃないか",
-        "実はUXはよくわかってない",
+        "実はUXってよくわかってない",
         "SVGアニメーションの可能性",
         "クリエイトには意思も必要",
-        "いい企画ですわ",
-        "ものづくりは楽しい"
+        "いい企画",
+        "ものづくりは楽しい",
+        "自分で設計したものが動くのは嬉しい",
+        "何かを取り戻した気がする",
     ];
     // 特別扱いしたいテキスト
     const SPECIAL_TEXTS = [
@@ -76,11 +89,11 @@ document.addEventListener('DOMContentLoaded', () => {
         createTextElement(text);
 
         // 次の出現までの時間をランダム設定
-        let nextDelay = Math.random() * 1700 + 800;
+        let nextDelay = Math.random() * (TEXT_DISPLAY_CONFIG.maxDelay - TEXT_DISPLAY_CONFIG.minDelay) + TEXT_DISPLAY_CONFIG.minDelay;
 
         // ★リストに含まれているかチェック
         if (SPECIAL_TEXTS.includes(text)) {
-            nextDelay = 3000; // 特別なテキストの後は余韻を持たせる
+            nextDelay = TEXT_DISPLAY_CONFIG.specialDelay; // 特別なテキストの後は余韻を持たせる
         }
 
         setTimeout(spawnText, nextDelay);
